@@ -100,6 +100,8 @@ def register():
     # Handle form validation errors
     if form.emailInput.errors:
         flash("Please enter a valid email address.", 'error')
+    if form.passwordInput.errors:
+        flash(form.passwordInput.errors[0], 'error')
 
     return render_template('register.html', title='Register User', form=form)
 
