@@ -177,16 +177,17 @@ def update(id):
 @login_required
 def delete(id):
     user_to_delete = User.query.get_or_404(id)
-    form = LoginForm()
     try:
         db.session.delete(user_to_delete)
         db.session.commit()
         flash("User was deleted!")
-        return render_template('login.html', title='Login User', form=form)
+        logout_user()
+        return redirect(url_for('login'))
 
     except:
-        flash("There was an issue deleting this recipe. Try again..")
-        return render_template('login.html', title='Login User', form=form)
+        flash("There was an issue deleting this user. Try again..")
+        logout_user()
+        return redirect(url_for('login'))
 
 @app.route('/get-ingredients', methods=['GET'])
 def get_ingredients():
