@@ -28,7 +28,8 @@ admin.add_view(ModelView(Recipe_Ingredients, db.session))
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    title="Homepage"
+    return render_template('index.html', title=title)
 
 # # localhost:5000/user/name
 # @app.route('/user/<name>')
@@ -148,7 +149,7 @@ def dashboard():
             flash("Error! User update failed... Try again")
             return render_template("dashboard.html", form=form, user_to_update=user_to_update, id=id)
     else:
-        return render_template("dashboard.html", form=form, user_to_update=user_to_update, id=id)
+        return render_template("dashboard.html", title='Dashboard', form=form, user_to_update=user_to_update, id=id)
 
 # Update User
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -167,7 +168,7 @@ def update(id):
             flash("Error! User update failed... Try again")
             return render_template("update.html", form=form, user_to_update=user_to_update, id=id)
     else:
-        return render_template("update.html", form=form, user_to_update=user_to_update, id=id)
+        return render_template("update.html", title='Update User', form=form, user_to_update=user_to_update, id=id)
 
 # Delete User
 @app.route('/delete/<int:id>', methods=['GET', 'POST'])
@@ -256,14 +257,14 @@ def add_recipe():
 def recipes():
     # Grabbing all recipes
     recipes = Recipe.query.order_by(Recipe.created_at)
-    return render_template("recipes.html", recipes=recipes)
+    return render_template("recipes.html", title='Recipes', recipes=recipes)
 
 @app.route('/recipes/<int:id>')
 @login_required
 def recipe(id):
     # Grabbing all recipes
     recipe = Recipe.query.get_or_404(id)
-    return render_template("recipe.html", recipe=recipe)
+    return render_template("recipe.html", title='Recipe', recipe=recipe)
 
 @app.route('/recipes/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -286,7 +287,7 @@ def edit_recipe(id):
         return render_template("edit_recipe.html", recipe=recipe, form=form)
     else:
         flash("This Recipe Is Not Yours To Edit!")
-        return redirect(url_for('recipes', id=recipe.id))
+        return redirect(url_for('recipes', title='Edit Recipe', id=recipe.id))
 
 @app.route('/recipes/delete/<int:id>')
 @login_required
@@ -317,9 +318,9 @@ def delete_recipe(id):
 # Invalid URL
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template("404.html"), 404
+    return render_template("404.html", title='404'), 404
 
 # Internal Server Error
 @app.errorhandler(500)
 def page_not_found(error):
-    return render_template("500.html"), 500
+    return render_template("500.html", title='500'), 500
