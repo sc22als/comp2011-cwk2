@@ -1,0 +1,44 @@
+{% extends "base.html" %} <!--  Child Template based on 'base.html' -->
+
+{% block content %}
+  <!-- Flash messages should be shown above the form -->
+  {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+
+  {% if id == current_user.id %}
+
+  <h1>Update User..</h1>
+  <br/>
+  <div class="shadow mb-5 bg-body rounded">
+    <form id="registerForm" action="/update/{{ user_to_update.id }}" method="POST">
+      {{ form.hidden_tag() }} <!-- Hidden CSRF token -->
+
+      {{ form.usernameInput.label(class="form-label") }}:
+      {{ form.usernameInput(class="form-control", value=user_to_update.username) }}<br>
+
+
+      {{ form.emailInput.label(class="form-label") }}:
+      {{ form.emailInput(class="form-control", value=user_to_update.email) }}<br>
+
+      <button type="submit" class="btn btn-outline-primary">Submit</button>
+      <a href="{{ url_for('delete', id=user_to_update.id)}}" class="btn btn-outline-danger">Delete</a>
+    </form>
+  </div>
+
+  <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Go back to Dashboard</a>
+  {% else %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Sorry, you are not authorised to edit this user!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <center>
+    <h2>Access Denied!</h2>
+    <p>You cannot access this user profile.</p>
+  </center>
+  {% endif %}
+  
+{% endblock %}

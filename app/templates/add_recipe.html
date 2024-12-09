@@ -1,0 +1,70 @@
+{% extends "base.html" %} <!--  Child Template based on 'base.html' -->
+{% block header %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/ingForm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/updateIng.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+  <h1>Add Your Recipe</h1><br/>
+
+  <!-- Flash messages should be shown above the form -->
+  {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+  <div id="registerForm">
+  <form method="POST" name="add_recipe">
+    {{ form.hidden_tag() }} <!-- Hidden CSRF token -->
+    {{ form.nameInput.label(class="form-label") }}:
+    {{ form.nameInput(class="form-control") }}<br/>
+
+    {{ form.instructionsInput.label(class="form-label") }}:
+    {{ form.instructionsInput(class="form-control", rows="5") }}<br/><br/>
+
+    <div id="ingredients-section">
+      <h4>Add Ingredients</h4>
+      <div id="ingredient-inputs">
+          <form id="ingredient-inputs" method="POST">
+            {{ ingForm.ingredient.label(class="form-label") }}:
+            {{ ingForm.ingredient(class="form-control w-25", placeholder="e.g. sugar") }}
+            <button type="button" class="add-ingredient btn btn-info">Add Ingredient</button>
+            <br/><br/>
+            <div id="ingredientSuccess" class="alert alert-success" role="alert" style="display:none;"></div>
+            <div id="ingredientError" class="alert alert-error" role="alert" style="display:none;"></div>
+            <div id="ingredientInfo" class="alert alert-info" role="alert" style="display:none;"></div>
+        </form>              
+      </div>
+    </div>
+
+    <br/>
+    <div id="ingredient-selection-section">
+      <h4>Choose your Ingredients</h4>
+      <label for="ingredient">Choose an ingredient:</label>
+      <select name="ingredient" id="ingredient-select" class="form-control w-25">
+          <option value="">Select an ingredient</option>
+          {% for ingredient in ingredients %}
+              <option value="{{ ingredient.name }}">{{ ingredient.name }}</option>
+          {% endfor %}
+      </select>
+      <br/>
+      <button id="refreshIngredients" class="btn btn-warning">Refresh Ingredients List</button>
+    </div>
+
+    <div id="list-ingredients-selected">
+      <!--  selected ingredients will be displayed here -->
+    </div>
+
+    <!-- Hidden input to store selected ingredients -->
+    <input type="hidden" id="selected-ingredients" name="selected_ingredients">
+
+    <button type="submit" class="btn btn-secondary">Submit</button>
+  </form>
+  </div>
+  <br/><br/>
+  {{ ckeditor.load() }}
+  {{ ckeditor.config(name='instructionsInput') }}
+{% endblock %}

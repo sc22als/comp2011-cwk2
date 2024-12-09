@@ -1,0 +1,68 @@
+body {
+    background-color: #f4f4f4;
+    color: #333; 
+}
+
+.container {
+    margin-top: 50px;
+}
+
+#registerForm {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    color: #333;
+}
+
+input.form-control {
+    background-color: #f8f8f8;
+    color: #3  /* Darker blue border on hover */33;
+    border: 1px solid #ccc;
+}
+
+input.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button.btn-secondary {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+button.btn-secondary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+#ingredients-section, #ingredient-selection-section {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+button.add-ingredient {
+    background-color: #28a745;
+    color: white;
+    border: 1px solid #28a745;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+button.add-ingredient:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
